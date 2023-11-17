@@ -1,13 +1,14 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-
 import { TRPCReactProvider } from "@/trpc/react";
 
-const inter = Inter({
-  subsets: ["latin"],
+import { Inter, Noto_Sans_Arabic } from "next/font/google";
+
+const inter = Noto_Sans_Arabic({
+  subsets: ["arabic"],
   variable: "--font-sans",
+  weight: "600",
 });
 
 export const metadata = {
@@ -22,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+    <html lang="ar" dir="rtl">
+      <body className={` ${inter.className} rtl text-right`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           {children}
         </TRPCReactProvider>
