@@ -2,31 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
-enum Sex {
-  Male,
-  Female,
-}
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
-  create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      return ctx.db.post.create({
-        data: {
-          name: input.name,
-        },
-      });
-    }),
   createStudent: publicProcedure
     .input(
       z.object({
@@ -34,6 +10,7 @@ export const postRouter = createTRPCRouter({
         familyName: z.string().min(2),
         parentName: z.string().min(4),
         parentNumber: z.string(),
+        facbookAcount: z.string().optional(),
         studentPhoneNumber: z.string().optional(),
         group: z.string(),
         adress: z.string(),
@@ -43,9 +20,6 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
       return ctx.db.student.create({
         data: {
           name: input.name,
@@ -55,6 +29,7 @@ export const postRouter = createTRPCRouter({
           sex: input.sex,
           adress: input.adress,
           Ahzab: input.Ahzab,
+          facbookAcount: input.facbookAcount,
           educational_level: input.educational_level,
           group: input.group,
           studentPhoneNumber: input.studentPhoneNumber,

@@ -6,7 +6,7 @@ import Link from "next/link";
 const Page = () => {
   return (
     <>
-      <header className="sticky my-4 flex   items-center justify-center ">
+      <header className="sticky my-4 flex mt-2  items-center justify-center ">
         <Link href="/">
           {" "}
           <Image width={201} height={51} src="/images/header-logo.png" alt="" />
@@ -14,7 +14,7 @@ const Page = () => {
       </header>
 
       <div className=" flex flex-col items-center justify-center text-center">
-        <h2 className=" py-1 text-center text-2xl font-bold">
+        <h2 className=" text-darker py-1 text-center text-2xl font-bold">
           التسجيل الإلكتروني للرّواد و الرّائدات
         </h2>
         <p className="pb-3 text-lg ">
@@ -293,7 +293,7 @@ const Page = () => {
           />
         </svg>
       </div>
-      <div className=" flex flex-col items-center  ">
+      <div className=" flex flex-col items-center pb-3  ">
         <h3 className=" text-lg">إستمارة المعلومات</h3>
         <h4 className=" text-xs font-thin">* للخانات الإختيارية</h4>
       </div>

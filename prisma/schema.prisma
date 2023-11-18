@@ -34,6 +34,7 @@ model Student{
     parentName         String
     parentNumber       String
     group              String
+    facbookAcount      String?
     studentPhoneNumber String?
     adress             String
     educational_level  String
