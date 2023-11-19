@@ -50,9 +50,6 @@ const formSchema = z.object({
 
 export function ProfileForm() {
   const createStudent = api.post.createStudent.useMutation({});
-
-  const [state, setstate] = useState();
-
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,7 +67,6 @@ export function ProfileForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
-
     createStudent.mutate({ ...values, Ahzab: numberOfAhzab });
     // ✅ This will be type-safe and validated.
     console.log(`you created the student ${values.name} successfully`);

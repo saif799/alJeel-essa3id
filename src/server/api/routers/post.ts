@@ -17,6 +17,7 @@ export const postRouter = createTRPCRouter({
         educational_level: z.string(),
         Ahzab: z.number(),
         sex: z.literal("Male").or(z.literal("Female")),
+        dob:z.date()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -26,12 +27,13 @@ export const postRouter = createTRPCRouter({
           famillyName: input.familyName,
           parentName: input.parentName,
           parentNumber: input.parentNumber,
+          dob: input.dob,
           sex: input.sex,
-          adress: input.adress,
           Ahzab: input.Ahzab,
-          facbookAcount: input.facbookAcount,
-          educational_level: input.educational_level,
+          adress: input.adress,
           group: input.group,
+          educational_level: input.educational_level,
+          facbookAcount: input.facbookAcount,
           studentPhoneNumber: input.studentPhoneNumber,
         },
       });

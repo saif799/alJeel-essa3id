@@ -8,7 +8,7 @@ import { Inter, Noto_Sans_Arabic } from "next/font/google";
 const inter = Noto_Sans_Arabic({
   subsets: ["arabic"],
   variable: "--font-sans",
-  weight: "600",
+  // weight: "700",
 });
 
 export const metadata = {

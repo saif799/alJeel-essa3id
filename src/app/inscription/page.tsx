@@ -6,7 +6,7 @@ import Link from "next/link";
 const Page = () => {
   return (
     <>
-      <header className="sticky my-4 flex mt-2  items-center justify-center ">
+      <header className="sticky my-4 flex items-center justify-center md:flex ">
         <Link href="/">
           {" "}
           <Image width={201} height={51} src="/images/header-logo.png" alt="" />
