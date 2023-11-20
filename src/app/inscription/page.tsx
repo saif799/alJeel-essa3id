@@ -1,6 +1,5 @@
 import Footer from "@/components/footer";
 import { ProfileForm } from "@/components/ourForm";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,10 +14,10 @@ const Page = () => {
       </header>
 
       <div className=" flex flex-col items-center justify-center text-center lg:mb-10  ">
-        <h2 className=" text-darker py-1 text-center text-2xl font-bold">
+        <h2 className=" text-darker py-1 text-center text-2xl font-bold lg:text-3xl">
           التسجيل الإلكتروني للرّواد و الرّائدات
         </h2>
-        <p className="pb-3 text-lg ">
+        <p className="pb-3 text-lg lg:text-xl ">
           ساهم في رقمنة المؤسسة
           <br /> عن طريق التسجيل الإلكتروني
         </p>
@@ -29,7 +28,7 @@ const Page = () => {
 
       {/* <p>يرجى مراجعة المعلومات قبل تأكيد التسجيل</p> */}
 
-      <div className=" lg:mb-16 lg:flex lg:flex-row-reverse lg:justify-around">
+      <div className=" mb-8 lg:mb-16 lg:flex lg:flex-row-reverse lg:justify-around">
         <div className="flex flex-col items-center justify-center pb-5   ">
           <svg
             width="382"
@@ -297,12 +296,16 @@ const Page = () => {
         </div>
 
         {/* <Button>تسجيل</Button> */}
-        <div className=" item-center flex flex-grow-0 flex-col ">
+        <div className="  item-center flex  flex-col justify-center  ">
           <div className=" flex flex-col items-center pb-3  ">
-            <h3 className=" text-lg">إستمارة المعلومات</h3>
-            <h4 className=" text-xs font-thin">* للخانات الإختيارية</h4>
+            <h3 className=" text-lg lg:text-xl">إستمارة المعلومات</h3>
+            <h4 className=" text-xs font-light lg:text-sm">
+              * للخانات الإختيارية
+            </h4>
           </div>
-          <ProfileForm />
+          <div className="flex w-[420px] items-center justify-center lg:w-[450px]">
+            <ProfileForm />
+          </div>
         </div>
       </div>
       <Footer />

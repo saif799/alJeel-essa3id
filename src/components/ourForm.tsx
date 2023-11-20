@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,8 +22,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { api } from "@/trpc/react";
-import { useState } from "react";
-import { DatePickerDemo } from "./DatePicker";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
@@ -32,6 +29,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 const formSchema = z.object({
+
   name: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
     message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
   }),
@@ -42,13 +40,15 @@ const formSchema = z.object({
     message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
   }),
   parentNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
+
+
   facbookAcount: z.string().optional(),
   studentPhoneNumber: z.string().optional(),
   group: z.string(),
   adress: z.string(),
   educational_level: z.string(),
   Ahzab: z.string(),
-  sex: z.literal("Male").or(z.literal("Female")),
+  sex: z.enum(["Male", "Female"]),
   dob: z.date({
     required_error: "تاريخ الميلاد مطلوب",
   }),
@@ -82,13 +82,15 @@ export function ProfileForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className=" grid grid-cols-4 gap-3">
-          <div className="col-span-2">
+          <div className=" col-span-2">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>إسم الرائد(ة) : </FormLabel>
+                  <FormLabel>
+                    
+                    إسم الرائد(ة) : </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
