@@ -43,14 +43,14 @@ const formSchema = z.object({
   }),
   parentNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
   facbookAcount: z.string().optional(),
-  studentPhoneNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
+  studentPhoneNumber: z.string().optional(),
   group: z.string(),
   adress: z.string(),
   educational_level: z.string(),
   Ahzab: z.string(),
   sex: z.literal("Male").or(z.literal("Female")),
   dob: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "تاريخ الميلاد مطلوب",
   }),
 });
 
