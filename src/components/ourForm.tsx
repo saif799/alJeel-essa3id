@@ -32,12 +32,18 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string().min(2),
-  familyName: z.string().min(2),
-  parentName: z.string().min(2),
-  parentNumber: z.string().max(10).min(10),
+  name: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
+    message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
+  }),
+  familyName: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
+    message : "يجب ان يتكون اللقب على الأقل من 3 أحرف"
+  }),
+  parentName: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
+    message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
+  }),
+  parentNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
   facbookAcount: z.string().optional(),
-  studentPhoneNumber: z.string().optional(),
+  studentPhoneNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
   group: z.string(),
   adress: z.string(),
   educational_level: z.string(),
