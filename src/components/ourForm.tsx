@@ -72,21 +72,15 @@ export function ProfileForm() {
       familyName: "",
       group: "",
       parentName: "",
-      // sex: "Male",
     },
   });
 
-  const router=useRouter()
-  // 2. Define a submit handler.
+  const router = useRouter();
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
     createStudent.mutate({ ...values, Ahzab: numberOfAhzab });
-    // ✅ This will be type-safe and validated.
-    console.log(`you created the student ${values.name} successfully`);
-    router.push("/successful")
+    router.push("/successful");
   }
-
-  const Groups = { male: [], female: [] };
 
   return (
     <Form {...form}>
@@ -180,7 +174,7 @@ export function ProfileForm() {
                 <FormItem>
                   <FormLabel>* رقم هاتف الرائد(ة) : </FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="tel" {...field} pattern="0[5-7][0-9]{8}" />
                   </FormControl>
 
                   <FormMessage />
@@ -371,7 +365,7 @@ export function ProfileForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className=" border-1 ">
+                      <SelectTrigger className=" border-1 text-gray-700  ">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>

@@ -4,13 +4,11 @@ import { Button } from "@/components/ui/button";
 import Footer from "@/components/footer";
 
 export default function Home() {
-  // const hello = await api.post.hello.query({ text: "from Saif" });
-
   return (
     <div className="flex  items-center justify-center  ">
       <div className=" mx-auto w-full  ">
         <header className="sticky my-4 flex items-center justify-between  px-2 lg:mb-16 lg:px-20">
-          <Image width={201} height={51} src="/images/header logo.svg" alt="" />
+          <Image width="202" height="51" src="/images/header logo.svg" alt="" />
           <Button className="rounded-2xl">
             <Link href="/inscription"> التسجيل الإلكتروني</Link>
           </Button>
