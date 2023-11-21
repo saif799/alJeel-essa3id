@@ -118,7 +118,14 @@ input {
 h4 {
   color: hsl(186, 100%, 20%);
 }
-
+/* 
 section {
   box-shadow: 0px 0px 49px 4px rgba(0, 0, 0, 0.11);
+} */
+
+@media only screen and (min-width: 1200px) {
+  section {
+    /* Add or override styles for large screens here */
+    box-shadow: 0px 0px 49px 4px rgba(0, 0, 0, 0.11);
+  }
 }

@@ -69,20 +69,28 @@ export default function Home() {
           </ul>
         </div>
         <div className=" lg:mb-16 lg:flex  lg:justify-around">
-          <div className="flex flex-col items-center lg:gap-5 gap-3 pb-6">
+          <div className="flex flex-col items-center gap-3 pb-6 lg:gap-5">
             <h2 className="py-3 text-center text-3xl font-bold lg:text-4xl">
               مجموعات المؤسسة
             </h2>
             <Image src="/images/jil-logo.png" alt="" width={230} height={230} />
-            <div className=" flex gap-14">
-              <Image src="/assets/facebook.svg" alt="" width={48} height={48} />
-              <Image
-                src="/assets/facebook_messenger.svg"
-                alt=""
-                width="48"
-                height="48"
-              />
-              <Image src="/assets/telegam.svg" alt="" width="48" height="48" />
+            <div className=" flex gap-24">
+              <a href="https://www.facebook.com/groups/244723067064797">
+                <Image
+                  src="/assets/facebook.svg"
+                  alt=""
+                  width={48}
+                  height={48}
+                />
+              </a>
+              <a href="https://t.me/+MVCSCW9B7gdmZjk0">
+                <Image
+                  src="/assets/telegam.svg"
+                  alt=""
+                  width="48"
+                  height="48"
+                />
+              </a>
             </div>
           </div>
           <div className="flex flex-col items-center lg:gap-5">
