@@ -16,8 +16,9 @@ export const postRouter = createTRPCRouter({
         adress: z.string(),
         educational_level: z.string(),
         Ahzab: z.number(),
-        sex: z.literal("Male").or(z.literal("Female")),
-        dob:z.date()
+        sex: z.enum(["Male", "Female"]),
+        dob: z.date(),
+        start_date: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -27,21 +28,16 @@ export const postRouter = createTRPCRouter({
           famillyName: input.familyName,
           parentName: input.parentName,
           parentNumber: input.parentNumber,
-          dob: input.dob,
+          studentPhoneNumber: input.studentPhoneNumber,
+          facbookAcount: input.facbookAcount,
+          educational_level: input.educational_level,
           sex: input.sex,
           Ahzab: input.Ahzab,
           adress: input.adress,
           group: input.group,
-          educational_level: input.educational_level,
-          facbookAcount: input.facbookAcount,
-          studentPhoneNumber: input.studentPhoneNumber,
+          start_date: input.start_date,
+          dob: input.dob,
         },
       });
     }),
-
-  getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-    });
-  }),
 });

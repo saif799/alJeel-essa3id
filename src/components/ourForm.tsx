@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import ar from "date-fns/locale/ar";
 
@@ -47,20 +47,20 @@ const formSchema = z.object({
   facbookAcount: z.string().optional(),
 
   studentPhoneNumber: z.string().optional(),
-  group: z.string({required_error : "يرجى إختيار الفوج"}),
-  adress: z.string({required_error:"يرجى إدخال العنوان"}).min(15,
-    {
-      message :"يرجى إدخال العنوان كاملا"
-    }
-    ),
-  educational_level: z.string({required_error:"يرجى إختيار المستوى الدراسي"}),
-  Ahzab: z.string({required_error : "يرجى إدخال عدد الأحزاب"}),
+  group: z.string({ required_error: "يرجى إختيار الفوج" }),
+  adress: z.string({ required_error: "يرجى إدخال العنوان" }).min(15, {
+    message: "يرجى إدخال العنوان كاملا",
+  }),
+  educational_level: z.string({
+    required_error: "يرجى إختيار المستوى الدراسي",
+  }),
+  Ahzab: z.string({ required_error: "يرجى إدخال عدد الأحزاب" }),
 
   sex: z.enum(["Male", "Female"]),
   dob: z.date({
     required_error: "تاريخ الميلاد مطلوب",
   }),
-  // start_date: z.date(),
+  start_date: z.string({ required_error: "يرجى تحديد موسم الالتحاق" }),
 });
 
 export function ProfileForm() {
@@ -68,14 +68,6 @@ export function ProfileForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      adress: "",
-      educational_level: "",
-      familyName: "",
-      group: "",
-      parentName: "",
-    },
   });
 
   const router = useRouter();
@@ -252,12 +244,13 @@ export function ProfileForm() {
               )}
             />
           </div>
+
           <div className="col-span-2">
             <FormField
               control={form.control}
               name="group"
               render={({ field }) => (
-                <FormItem>
+                <FormItem >
                   <FormLabel>الفوج : </FormLabel>
                   <Select
                     dir="rtl"
@@ -344,8 +337,8 @@ export function ProfileForm() {
                           date > new Date() || date < new Date("1900-01-01")
                         }
                         initialFocus
-                        fromYear={1980}
-                        toYear={2025}
+                        fromYear={1970}
+                        toYear={2020}
                       />
                     </PopoverContent>
                   </Popover>
@@ -382,54 +375,35 @@ export function ProfileForm() {
               )}
             />
           </div>
-          {/* <FormField
-            control={form.control}
-            name="start_date"
-            render={({ field }) => (
-              <FormItem className="flex  flex-col gap-1">
-                <FormLabel> تاريخ الالتحاق </FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild className="rounded-2xl border-1">
+          <div className=" col-span-1">
+            <FormField
+              control={form.control}
+              name="start_date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-1">
+                  <FormLabel> تاريخ الالتحاق </FormLabel>
+                  <Select
+                    dir="rtl"
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          " pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground",
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "yyyy-MM", { locale: ar })
-                        ) : (
-                          <span> الشهر / السنة</span>
-                        )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
+                      <SelectTrigger className=" border-1 text-gray-700  ">
+                        <SelectValue />
+                      </SelectTrigger>
                     </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      ISOWeek
-                      lang="ar"
-                      locale={ar}
-                      captionLayout="dropdown-buttons"
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                      fromYear={1980}
-                      toYear={2025}
-                    />
-                  </PopoverContent>
-                </Popover>
+                    <SelectContent>
+                      <SelectItem value="2022/2023">2022/2023</SelectItem>
+                      <SelectItem value="2023/2024">2023/2024</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <div className="col-span-4 flex justify-center ">
             <Button
               disabled={form.formState.disabled}
