@@ -30,13 +30,13 @@ import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  name: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+  name: z.string({ required_error: "يرجى إدخال الإسم" }).min(3, {
     message: "يجب ان يتكون الإسم على الأقل من 3 أحرف",
   }),
-  familyName: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+  familyName: z.string({ required_error: "يرجى إدخال اللقب" }).min(3, {
     message: "يجب ان يتكون اللقب على الأقل من 3 أحرف",
   }),
-  parentName: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+  parentName: z.string({ required_error: "يرجى إدخال الإسم" }).min(3, {
     message: "يجب ان يتكون الإسم على الأقل من 3 أحرف",
   }),
   parentNumber: z
@@ -220,6 +220,7 @@ export function ProfileForm() {
                       type="number"
                       lang="en"
                       min={0}
+                      max={60}
                       {...field}
                     />
                   </FormControl>
