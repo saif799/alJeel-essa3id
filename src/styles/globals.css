@@ -91,13 +91,14 @@ h2 {
 
 p {
   color: hsl(186, 100%, 20%);
-  font-weight: 400;
+  font-weight: 500;
 }
 hr {
   border-color: #00383e;
 }
 li {
   color: #005c66;
+  font-weight: 500;
 }
 
 h3 {
@@ -118,7 +119,6 @@ h4 {
   color: hsl(186, 100%, 20%);
 }
 
-
-section{
+section {
   box-shadow: 0px 0px 49px 4px rgba(0, 0, 0, 0.11);
 }

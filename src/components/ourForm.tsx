@@ -198,6 +198,7 @@ export function ProfileForm() {
                       <SelectItem value="elementary school">إبتدائي</SelectItem>
                       <SelectItem value="middle school">متوسط</SelectItem>
                       <SelectItem value="high school">ثانوي</SelectItem>
+                      <SelectItem value="university">جامعي</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -250,7 +251,7 @@ export function ProfileForm() {
               control={form.control}
               name="group"
               render={({ field }) => (
-                <FormItem >
+                <FormItem>
                   <FormLabel>الفوج : </FormLabel>
                   <Select
                     dir="rtl"
