@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 import ar from "date-fns/locale/ar";
 
@@ -27,22 +27,25 @@ import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-
-  name: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
-    message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
+  name: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+    message: "يجب ان يتكون الإسم على الأقل من 3 أحرف",
   }),
-  familyName: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
-    message : "يجب ان يتكون اللقب على الأقل من 3 أحرف"
+  familyName: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+    message: "يجب ان يتكون اللقب على الأقل من 3 أحرف",
   }),
-  parentName: z.string({required_error:"يرجى إدخال الإسم"}).min(2,{
-    message : "يجب ان يتكون الإسم على الأقل من 3 أحرف"
+  parentName: z.string({ required_error: "يرجى إدخال الإسم" }).min(2, {
+    message: "يجب ان يتكون الإسم على الأقل من 3 أحرف",
   }),
-  parentNumber: z.string({required_error:"يرجى إدخال رقم الهاتف"}).max(10,"رقم الهاتف يجب أن يتكون من 10 أرقام").min(10),
-
+  parentNumber: z
+    .string({ required_error: "يرجى إدخال رقم الهاتف" })
+    .max(10, "رقم الهاتف يجب أن يتكون من 10 أرقام")
+    .min(10),
 
   facbookAcount: z.string().optional(),
+
   studentPhoneNumber: z.string().optional(),
   group: z.string({required_error : "يرجى إختيار الفوج"}),
   adress: z.string({required_error:"يرجى إدخال العنوان"}).min(15,
@@ -52,10 +55,12 @@ const formSchema = z.object({
     ),
   educational_level: z.string({required_error:"يرجى إختيار المستوى الدراسي"}),
   Ahzab: z.string({required_error : "يرجى إدخال عدد الأحزاب"}),
+
   sex: z.enum(["Male", "Female"]),
   dob: z.date({
     required_error: "تاريخ الميلاد مطلوب",
   }),
+  // start_date: z.date(),
 });
 
 export function ProfileForm() {
@@ -74,13 +79,17 @@ export function ProfileForm() {
     },
   });
 
+  const router=useRouter()
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
     createStudent.mutate({ ...values, Ahzab: numberOfAhzab });
     // ✅ This will be type-safe and validated.
     console.log(`you created the student ${values.name} successfully`);
+    router.push("/successful")
   }
+
+  const Groups = { male: [], female: [] };
 
   return (
     <Form {...form}>
@@ -92,9 +101,7 @@ export function ProfileForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    
-                    إسم الرائد(ة) : </FormLabel>
+                  <FormLabel>إسم الرائد(ة) : </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -158,7 +165,7 @@ export function ProfileForm() {
               name="facbookAcount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>*حساب الرائد(ة) على فايسبوك : </FormLabel>
+                  <FormLabel>حساب فيسبوك* </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -224,6 +231,7 @@ export function ProfileForm() {
                     <Input
                       placeholder="عدد الأحزاب"
                       type="number"
+                      lang="en"
                       min={0}
                       {...field}
                     />
@@ -234,7 +242,7 @@ export function ProfileForm() {
               )}
             />
           </div>
-          <div className="col-span-3">
+          <div className="col-span-2">
             <FormField
               control={form.control}
               name="adress"
@@ -250,26 +258,51 @@ export function ProfileForm() {
               )}
             />
           </div>
-          <div className="col-span-1">
+          <div className="col-span-2">
             <FormField
               control={form.control}
-              name="sex"
+              name="group"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>الجنس :</FormLabel>
+                  <FormLabel>الفوج : </FormLabel>
                   <Select
                     dir="rtl"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className=" border-1 ">
-                        <SelectValue />
+                      <SelectTrigger className=" border-1 text-gray-700 ">
+                        <SelectValue className=" " />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Male">ذكر</SelectItem>
-                      <SelectItem value="Female">أنثى</SelectItem>
+                    <SelectContent className=" ">
+                      {}
+                      {form.watch("sex") === "Male" ||
+                      form.watch().sex == undefined ? (
+                        <>
+                          <SelectItem value="إثمار">إثمار</SelectItem>
+                          <SelectItem value="فتية الإسلام">
+                            فتية الإسلام
+                          </SelectItem>
+                          <SelectItem value="شموس الأمة">
+                            {" "}
+                            شموس الأمة
+                          </SelectItem>
+                        </>
+                      ) : null}
+
+                      {form.watch("sex") == "Female" ||
+                      form.watch().sex == undefined ? (
+                        <>
+                          <SelectItem value="بذور"> بذور </SelectItem>
+                          <SelectItem value="رواء">رواء </SelectItem>
+                          <SelectItem value="إشراق">إشراق </SelectItem>
+                        </>
+                      ) : null}
+
+                      <SelectItem value="الماهر بالقرآن براعم">
+                        الماهر بالقرآن براعم
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -284,7 +317,7 @@ export function ProfileForm() {
               control={form.control}
               name="dob"
               render={({ field }) => (
-                <FormItem className="flex  flex-col">
+                <FormItem className="flex  flex-col gap-1">
                   <FormLabel>تاريخ الميلاد :</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild className="rounded-2xl border-1">
@@ -328,51 +361,26 @@ export function ProfileForm() {
               )}
             />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1">
             <FormField
               control={form.control}
-              name="group"
+              name="sex"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>الفوج : </FormLabel>
+                <FormItem className="flex flex-col gap-1">
+                  <FormLabel>الجنس :</FormLabel>
                   <Select
                     dir="rtl"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className=" border-1 text-gray-700 ">
-                        <SelectValue className=" " />
+                      <SelectTrigger className=" border-1 ">
+                        <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className=" ">
-                      {}
-                      {form.getValues("sex") === "Male" ||
-                      form.getValues().sex == undefined ? (
-                        <>
-                          <SelectItem value="إثمار">إثمار</SelectItem>
-                          <SelectItem value="فتية الإسلام">
-                            فتية الإسلام
-                          </SelectItem>
-                          <SelectItem value="شموس الأمة">
-                            {" "}
-                            شموس الأمة
-                          </SelectItem>
-                        </>
-                      ) : null}
-
-                      {form.getValues("sex") == "Female" ||
-                      form.getValues().sex == undefined ? (
-                        <>
-                          <SelectItem value="بذور"> بذور </SelectItem>
-                          <SelectItem value="رواء">رواء </SelectItem>
-                          <SelectItem value="إشراق">إشراق </SelectItem>
-                        </>
-                      ) : null}
-
-                      <SelectItem value="الماهر بالقرآن براعم">
-                        الماهر بالقرآن براعم
-                      </SelectItem>
+                    <SelectContent>
+                      <SelectItem value="Male">ذكر</SelectItem>
+                      <SelectItem value="Female">أنثى</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -380,11 +388,59 @@ export function ProfileForm() {
               )}
             />
           </div>
-          <div className="col-span-4 flex justify-center">
+          {/* <FormField
+            control={form.control}
+            name="start_date"
+            render={({ field }) => (
+              <FormItem className="flex  flex-col gap-1">
+                <FormLabel> تاريخ الالتحاق </FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild className="rounded-2xl border-1">
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          " pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "yyyy-MM", { locale: ar })
+                        ) : (
+                          <span> الشهر / السنة</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      ISOWeek
+                      lang="ar"
+                      locale={ar}
+                      captionLayout="dropdown-buttons"
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                      fromYear={1980}
+                      toYear={2025}
+                    />
+                  </PopoverContent>
+                </Popover>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
+          <div className="col-span-4 flex justify-center ">
             <Button
               disabled={form.formState.disabled}
               type="submit"
-              className=" w-32 rounded-2xl  "
+              className=" w-32 rounded-2xl"
             >
               تسجيل
             </Button>
