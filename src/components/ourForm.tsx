@@ -44,9 +44,13 @@ const formSchema = z.object({
 
   facbookAcount: z.string().optional(),
   studentPhoneNumber: z.string().optional(),
-  group: z.string(),
-  adress: z.string(),
-  educational_level: z.string(),
+  group: z.string({required_error : "يرجى إختيار الفوج"}),
+  adress: z.string({required_error:"يرجى إدخال العنوان"}).min(15,
+    {
+      message :"يرجى إدخال العنوان كاملا"
+    }
+    ),
+  educational_level: z.string({required_error:"يرجى المستوى الدراسي"}),
   Ahzab: z.string(),
   sex: z.enum(["Male", "Female"]),
   dob: z.date({
