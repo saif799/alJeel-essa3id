@@ -9,7 +9,7 @@ const Page = () => {
       <header className="sticky my-4 flex items-center justify-center  ">
         <Link href="/">
           {" "}
-          <Image width={201} height={51} src="/images/header-logo.png" alt="" />
+          <Image width="202" height="51" src="/images/header logo.svg" alt="" />
         </Link>
       </header>
 
@@ -24,16 +24,13 @@ const Page = () => {
         <hr className=" w-80 lg:w-[900px]" />
       </div>
 
-      {/* <!-- form space --> */}
-
-      {/* <p>يرجى مراجعة المعلومات قبل تأكيد التسجيل</p> */}
-
       <div className=" mb-8 lg:mb-16 lg:flex lg:flex-row-reverse lg:justify-around">
-        <div className="flex flex-col items-center justify-center pb-5   ">
+        <div className="flex min-w-[350px] max-w-[430px] flex-col items-center  justify-center  pb-5 ">
           <svg
-            width="382"
+            className="min-w-[350px]  max-w-[430px]"
+            // width="382"
             height="320"
-            viewBox="0 0 382 320"
+            // viewBox="0 0 382 320"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -296,14 +293,14 @@ const Page = () => {
         </div>
 
         {/* <Button>تسجيل</Button> */}
-        <div className="  item-center flex  flex-col justify-center  ">
+        <div className="flex  flex-col items-center justify-center  ">
           <div className=" flex flex-col items-center pb-3  ">
             <h3 className=" text-lg lg:text-xl">إستمارة المعلومات</h3>
             <h4 className=" text-xs font-light lg:text-sm">
               * للخانات الإختيارية
             </h4>
           </div>
-          <div className="flex w-[420px] items-center justify-center lg:w-[450px]">
+          <div className="flex w-full  items-center justify-center  px-1 lg:w-[450px]">
             <ProfileForm />
           </div>
         </div>

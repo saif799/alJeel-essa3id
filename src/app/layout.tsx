@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={` ${inter.className} rtl text-right`}>
+      <body className={` ${inter.className} rtl text-right overscroll-none`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           {children}
         </TRPCReactProvider>
