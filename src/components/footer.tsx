@@ -5,7 +5,7 @@ import { Phone } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className=" flex w-full flex-col  items-center gap-1  bg-border py-4  text-center lg:gap-5">
+    <footer className=" flex w-full flex-col  items-center gap-2  bg-border py-5  text-center lg:gap-5">
       <Image
         src="/assets/jil logo white.svg"
         alt="jeel-logo"
