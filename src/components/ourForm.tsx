@@ -50,7 +50,7 @@ const formSchema = z.object({
       message :"يرجى إدخال العنوان كاملا"
     }
     ),
-  educational_level: z.string({required_error:"يرجى المستوى الدراسي"}),
+  educational_level: z.string({required_error:"يرجى إختيار المستوى الدراسي"}),
   Ahzab: z.string({required_error : "يرجى إدخال عدد الأحزاب"}),
   sex: z.enum(["Male", "Female"]),
   dob: z.date({
