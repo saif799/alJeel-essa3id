@@ -45,17 +45,20 @@ const formSchema = z.object({
     .min(10),
 
   facbookAcount: z.string().optional(),
-  studentPhoneNumber: z
-    .string({ required_error: "يرجى إدخال رقم الهاتف" })
-    .max(10, "رقم الهاتف يجب أن يتكون من 10 أرقام")
-    .min(10),
-  group: z.string(),
-  adress: z.string(),
-  educational_level: z.string(),
-  Ahzab: z.string(),
+
+  studentPhoneNumber: z.string().optional(),
+  group: z.string({required_error : "يرجى إختيار الفوج"}),
+  adress: z.string({required_error:"يرجى إدخال العنوان"}).min(15,
+    {
+      message :"يرجى إدخال العنوان كاملا"
+    }
+    ),
+  educational_level: z.string({required_error:"يرجى إختيار المستوى الدراسي"}),
+  Ahzab: z.string({required_error : "يرجى إدخال عدد الأحزاب"}),
+
   sex: z.enum(["Male", "Female"]),
   dob: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "تاريخ الميلاد مطلوب",
   }),
   // start_date: z.date(),
 });
