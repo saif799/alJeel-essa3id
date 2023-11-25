@@ -3,7 +3,8 @@ import "@/styles/globals.css";
 import { cookies } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Inter, Noto_Sans_Arabic } from "next/font/google";
+import {  Noto_Sans_Arabic } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Noto_Sans_Arabic({
   subsets: ["arabic"],
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <body className={` ${inter.className} rtl overscroll-none text-right`}>
         <TRPCReactProvider cookies={cookies().toString()}>
+        <Toaster />
           {children}
         </TRPCReactProvider>
       </body>
