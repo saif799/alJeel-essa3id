@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
 
 export const postRouter = createTRPCRouter({
   createStudent: publicProcedure
@@ -22,22 +23,37 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.student.create({
-        data: {
-          name: input.name,
-          famillyName: input.familyName,
-          parentName: input.parentName,
-          parentNumber: input.parentNumber,
-          studentPhoneNumber: input.studentPhoneNumber,
-          facbookAcount: input.facbookAcount,
-          educational_level: input.educational_level,
-          sex: input.sex,
-          Ahzab: input.Ahzab,
-          adress: input.adress,
-          group: input.group,
-          start_date: input.start_date,
-          dob: input.dob,
-        },
-      });
+      try {
+        const student = await ctx.db.student.create({
+          data: {
+            name: input.name,
+            famillyName: input.familyName,
+            parentName: input.parentName,
+            parentNumber: input.parentNumber,
+            studentPhoneNumber: input.studentPhoneNumber,
+            facbookAcount: input.facbookAcount,
+            educational_level: input.educational_level,
+            sex: input.sex,
+            Ahzab: input.Ahzab,
+            adress: input.adress,
+            group: input.group,
+            start_date: input.start_date,
+            dob: input.dob,
+          },
+        });
+
+        if (student) return { success: true };
+        else
+          throw new TRPCError({
+            message: "student was not added ",
+            code: "INTERNAL_SERVER_ERROR",
+            
+          });
+      } catch (err) {
+        throw new TRPCError({
+          message: "student was not added ",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
     }),
 });

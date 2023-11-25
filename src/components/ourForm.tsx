@@ -73,8 +73,16 @@ export function ProfileForm() {
   const router = useRouter();
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
-    createStudent.mutate({ ...values, Ahzab: numberOfAhzab });
-    router.push("/successful");
+    createStudent.mutate(
+      { ...values, Ahzab: numberOfAhzab },
+      {
+        onSuccess: ({ success }) => {
+          if (success) {
+            router.push("/successful");
+          }
+        },
+      },
+    );
   }
 
   return (
