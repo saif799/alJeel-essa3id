@@ -26,7 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -64,7 +64,10 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
-  const createStudent = api.post.createStudent.useMutation({});
+  // const createStudent = api.post.createStudent.useMutation({});
+  const { isLoading, mutate: createStudent } =
+    api.post.createStudent.useMutation({});
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,7 +76,7 @@ export function ProfileForm() {
   const router = useRouter();
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
-    createStudent.mutate(
+    createStudent(
       { ...values, Ahzab: numberOfAhzab },
       {
         onSuccess: ({ success }) => {
@@ -416,11 +419,15 @@ export function ProfileForm() {
 
           <div className="col-span-4 flex justify-center ">
             <Button
-              disabled={form.formState.disabled}
+              disabled={isLoading}
               type="submit"
               className=" w-32 rounded-2xl"
             >
-              تسجيل
+              {!isLoading ? (
+                "تسجيل"
+              ) : (
+                <Loader2 className=" h-4 w-4 animate-spin" />
+              )}
             </Button>
           </div>
         </div>
