@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 const formSchema = z.object({
   name: z.string({ required_error: "يرجى إدخال الإسم" }).min(3, {
@@ -64,16 +65,17 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
-  // const createStudent = api.post.createStudent.useMutation({});
   const { isLoading, mutate: createStudent } =
     api.post.createStudent.useMutation({});
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const router = useRouter();
+
+  const { toast } = useToast();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     const numberOfAhzab = parseInt(values.Ahzab, 10);
     createStudent(
@@ -83,6 +85,9 @@ export function ProfileForm() {
           if (success) {
             router.push("/successful");
           }
+        },
+        onError: (er) => {
+          toast({ description: er.message });
         },
       },
     );

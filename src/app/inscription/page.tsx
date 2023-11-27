@@ -25,7 +25,8 @@ const Page = () => {
       </div>
 
       <div className=" mb-8 lg:mb-16 lg:flex lg:flex-row-reverse lg:justify-around">
-        <div className="flex min-w-[350px] max-w-[430px] flex-col items-center  justify-center  pb-5 ">
+        <div className="flex items-center justify-center  pb-5 ">
+          {/* <div className="min-w-[350px] max-w-[500px]"> */}
           <svg
             className="min-w-[350px]  max-w-[430px]"
             // width="382"
@@ -290,6 +291,7 @@ const Page = () => {
               strokeLinejoin="round"
             />
           </svg>
+          {/* </div> */}
         </div>
 
         {/* <Button>تسجيل</Button> */}
