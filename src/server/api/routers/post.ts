@@ -47,7 +47,6 @@ export const postRouter = createTRPCRouter({
           throw new TRPCError({
             message: "student was not added ",
             code: "INTERNAL_SERVER_ERROR",
-            
           });
       } catch (err) {
         throw new TRPCError({
@@ -56,4 +55,65 @@ export const postRouter = createTRPCRouter({
         });
       }
     }),
+  numberOfstudents: publicProcedure.query(async ({ ctx }) => {
+    const Females = await ctx.db.student.count({
+      where: {
+        sex: "Female",
+      },
+    });
+    const Males = await ctx.db.student.count({
+      where: {
+        sex: "Male",
+      },
+    });
+
+    return { Females, Males };
+  }),
+  AhzabSum: publicProcedure.query(async ({ ctx }) => {
+    const totalAhzab = await ctx.db.student.aggregate({
+      _sum: {
+        Ahzab: true,
+      },
+    });
+
+    return { Ahzab: totalAhzab._sum };
+  }),
+  getGroupsCounts: publicProcedure.query(async ({ ctx }) => {
+    const groupCounts = await ctx.db.student.groupBy({
+      by: ["group"],
+      _count: true,
+      _sum: {
+        Ahzab: true,
+      },
+    });
+
+    const formattedGroupCounts = groupCounts.map((groupCount) => ({
+      id: groupCount.group,
+      value: groupCount._count,
+      ...groupCount._sum,
+    }));
+
+    return formattedGroupCounts;
+  }),
+  getAllStudents: publicProcedure.query(async ({ ctx }) => {
+    try {
+      const students = await ctx.db.student.findMany({
+        orderBy: {
+          Ahzab: "desc",
+        },
+      });
+
+      if (students) return students;
+      else
+        throw new TRPCError({
+          message: "somthing happen fetching the students ",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+    } catch (err) {
+      throw new TRPCError({
+        message: "somthing happen fetching the students",
+        code: "INTERNAL_SERVER_ERROR",
+      });
+    }
+  }),
 });

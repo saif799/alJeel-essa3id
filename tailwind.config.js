@@ -24,6 +24,7 @@ module.exports = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         darkgreen: "hsl(var(--dark-green))",
+        lightgreen: "hsl(var(--green-background))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -73,6 +74,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      boxShadow: {
+        custom: "0px 4px 24px -4px rgba(4, 126, 140, 0.38)",
       },
     },
   },

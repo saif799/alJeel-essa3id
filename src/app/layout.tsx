@@ -9,7 +9,6 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Noto_Sans_Arabic({
   subsets: ["arabic"],
   variable: "--font-sans",
-  // weight: "700",
 });
 
 export const metadata = {

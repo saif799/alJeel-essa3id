@@ -281,7 +281,6 @@ export function ProfileForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className=" ">
-                      {}
                       {form.watch("sex") === "Male" ||
                       form.watch().sex == undefined ? (
                         <>
@@ -399,7 +398,7 @@ export function ProfileForm() {
               name="start_date"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1">
-                  <FormLabel> تاريخ الالتحاق </FormLabel>
+                  <FormLabel>  موسم الالتحاق </FormLabel>
                   <Select
                     dir="rtl"
                     onValueChange={field.onChange}

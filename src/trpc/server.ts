@@ -13,7 +13,7 @@ export const api = createTRPCProxyClient<AppRouter>({
   links: [
     loggerLink({
       enabled: (op) =>
-        process.env.NODE_ENV === "development" ||
+        process.env.NODE_ENV ===  "development" ||
         (op.direction === "down" && op.result instanceof Error),
     }),
     unstable_httpBatchStreamLink({
