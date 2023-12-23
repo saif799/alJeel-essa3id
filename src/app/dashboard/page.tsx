@@ -6,6 +6,7 @@ import { DataTable } from "./components/data-table";
 import { api } from "@/trpc/server";
 import { Progress } from "@/components/ui/progress";
 import { MyResponsivePie } from "@/components/piechart";
+import Link from "next/link";
 
 function getAge(birthDate: Date | undefined) {
   if (birthDate) {
@@ -91,6 +92,7 @@ export default async function DemoPage() {
   const bestGroup = GroupsCounts.reduce((maxGroup, currentGroup) => {
     return currentGroup.Ahzab! > maxGroup.Ahzab! ? currentGroup : maxGroup;
   }).id;
+
   const formatedGroupsCounts = GroupsCounts.map((group) => {
     return {
       id: group.id,
@@ -101,16 +103,16 @@ export default async function DemoPage() {
 
   return (
     <div className=" flex h-screen">
-      {/* right hand side  */}
-
       <div className=" basis-1/6 bg-lightgreen">
         <div className=" flex flex-col items-center gap-4 py-9">
-          <Image
-            src="/assets/jil logo white.svg"
-            alt="jeel-logo"
-            width={112}
-            height={120}
-          />{" "}
+          <Link href="/">
+            <Image
+              src="/assets/jil logo white.svg"
+              alt="jeel-logo"
+              width={112}
+              height={120}
+            />{" "}
+          </Link>
           <h1 className=" text-2xl font-bold text-white  ">لوحة التحكم</h1>
           <div className="pt-10">
             <div className="flex gap-3 rounded-3xl bg-white px-5 py-2">
@@ -120,8 +122,6 @@ export default async function DemoPage() {
           </div>
         </div>
       </div>
-
-      {/* left hand side  */}
 
       <div className="grid basis-5/6 grid-cols-3 grid-rows-6 gap-x-10 gap-y-7 px-9 py-6">
         <div className="row-span-2 flex flex-col items-center justify-around  gap-3 rounded-3xl p-2 shadow-custom">
