@@ -44,26 +44,41 @@ const groupColors: GroupColors = {
 };
 
 export default async function DemoPage() {
-  // const students: StudentsArray = await api.post.getAllStudents.query();
-  const numberOfStudents = await api.post.numberOfstudents.query();
-  const GroupsCounts = await api.post.getGroupsCounts.query();
+  const students: StudentsArray = await api.post.getAllStudents.query();
+  // const numberOfStudents = await api.post.numberOfstudents.query();
+  const femalesNbr = await api.post.getFemales.query();
+  const malesNbr = await api.post.getMales.query();
+  const GroupsCounts = await api.post.getGroups.query();
 
-  // const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
+  const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
 
+  // const AhzabSum = Math.round(
+  //   GroupsCounts.reduce((sum, group) => sum + group.Ahzab!, 0) /
+  //     (numberOfStudents.Females + numberOfStudents.Males),
+  // );
   const AhzabSum = Math.round(
-    GroupsCounts.reduce((sum, group) => sum + group.Ahzab!, 0) /
-      (numberOfStudents.Females + numberOfStudents.Males),
+    GroupsCounts.reduce((sum, group) => sum + group._sum.Ahzab!, 0) /
+      (femalesNbr + malesNbr),
   );
   // const ageSum = Math.round(
   //   students.reduce((sum, std) => sum + getAge(std.dob), 0) /
   //     (numberOfStudents.Females + numberOfStudents.Males),
   // );
+  const ageSum = Math.round(
+    students.reduce((sum, std) => sum + getAge(std.dob), 0) /
+      (malesNbr + femalesNbr),
+  );
 
-  const bestGroup = GroupsCounts.reduce((maxGroup, currentGroup) => {
+  const formattedGroupCounts = GroupsCounts.map((groupCount) => ({
+    id: groupCount.group,
+    value: groupCount._count,
+    ...groupCount._sum,
+  }));
+  const bestGroup = formattedGroupCounts.reduce((maxGroup, currentGroup) => {
     return currentGroup.Ahzab! > maxGroup.Ahzab! ? currentGroup : maxGroup;
   }).id;
 
-  const formatedGroupsCounts = GroupsCounts.map((group) => {
+  const formatedGroupsCountsForObject = formattedGroupCounts.map((group) => {
     return {
       id: group.id,
       value: group.value,
@@ -97,7 +112,7 @@ export default async function DemoPage() {
         <div className="row-span-2 flex flex-col items-center justify-around  gap-3 rounded-3xl p-2 shadow-custom">
           <h2 className="text-2xl  text-darkgreen">مجموع الطلبة</h2>
           <p className="text-6xl font-semibold text-darkgreen ">
-            {/* {AllStudents.length} */}
+            {AllStudents.length}
           </p>
           <h2 className="text-2xl  text-darkgreen"> موزعين على 7 أفواج</h2>
         </div>
@@ -105,54 +120,53 @@ export default async function DemoPage() {
           <h2 className="text-2xl  text-darkgreen"> عدد الذكور</h2>
           <p className="text-6xl font-semibold text-darkgreen ">
             {" "}
-            {numberOfStudents.Males}
+            {/* {numberOfStudents.Males} */}
+            {malesNbr}
           </p>
           <div>
             <Progress
               gender="Male"
               className="bg-opacity-60"
-              // value={(numberOfStudents.Males * 100) / AllStudents.length}
+              value={(malesNbr * 100) / AllStudents.length}
             />
 
             <p className=" w-52 pt-3 text-center text-blue-700">
-              {/* {Math.round((numberOfStudents.Males * 100) / AllStudents.length)}% */}
+              {Math.round((malesNbr * 100) / AllStudents.length)}%
             </p>
           </div>
         </div>
         <div className="row-span-2 flex flex-col items-center justify-around gap-3 rounded-3xl shadow-custom">
           <h2 className="text-2xl  text-darkgreen"> عدد الإناث</h2>
           <p className="text-6xl font-semibold text-darkgreen ">
-            {numberOfStudents.Females}
+            {/* {numberOfStudents.Females} */}
+            {femalesNbr}
           </p>
           <div className="  ">
             <div>
               <Progress
                 gender="Female"
-                // value={(numberOfStudents.Females * 100) / AllStudents.length}
+                value={(femalesNbr * 100) / AllStudents.length}
               />
             </div>
             <p className=" w-52 pt-3 text-center text-pink-600">
-              {/* {Math.round(
-                (numberOfStudents.Females * 100) / AllStudents.length,
-              )} */}
-              %
+              {Math.round((femalesNbr * 100) / AllStudents.length)}%
             </p>
           </div>
         </div>
         <div className="col-span-2 row-span-4  rounded-3xl  shadow-custom ">
           <div className=" container   ">
-            {/* <DataTable columns={columns} data={AllStudents} searchKey="name" /> */}
+            <DataTable columns={columns} data={AllStudents} searchKey="name" />
           </div>
         </div>
 
         <div className="col-span-1 row-span-4 flex flex-col justify-around rounded-3xl p-4 shadow-custom">
           <div className="relative basis-2/3">
-            <MyResponsivePie data={formatedGroupsCounts} />
+            <MyResponsivePie data={formatedGroupsCountsForObject} />
           </div>
 
           <div className="flex basis-1/3 flex-col items-center justify-center gap-5">
             <p className="text-lg">متوسط الحفظ : {AhzabSum}</p>
-            {/* <p className="text-lg">متوسط الأعمار : {ageSum}</p> */}
+            <p className="text-lg">متوسط الأعمار : {ageSum}</p>
             <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>
           </div>
         </div>
