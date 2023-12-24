@@ -1,7 +1,6 @@
 "use client";
 
 import { ResponsivePie } from "@nivo/pie";
-import { Pie } from "@nivo/pie";
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and

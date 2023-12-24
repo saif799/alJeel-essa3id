@@ -96,24 +96,12 @@ export const postRouter = createTRPCRouter({
     return formattedGroupCounts;
   }),
   getAllStudents: publicProcedure.query(async ({ ctx }) => {
-    try {
-      const students = await ctx.db.student.findMany({
-        orderBy: {
-          Ahzab: "desc",
-        },
-      });
+    const students = await ctx.db.student.findMany({
+      orderBy: {
+        Ahzab: "desc",
+      },
+    });
 
-      if (students) return students;
-      else
-        throw new TRPCError({
-          message: "somthing happen fetching the students ",
-          code: "INTERNAL_SERVER_ERROR",
-        });
-    } catch (err) {
-      throw new TRPCError({
-        message: "somthing happen fetching the students",
-        code: "INTERNAL_SERVER_ERROR",
-      });
-    }
+    return students;
   }),
 });

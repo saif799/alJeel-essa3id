@@ -1,12 +1,11 @@
-import { BarChart2 } from "lucide-react";
 import Image from "next/image";
-
-import { type Student, columns } from "./components/columns";
-import { DataTable } from "./components/data-table";
+import Link from "next/link";
+import { BarChart2 } from "lucide-react";
 import { api } from "@/trpc/server";
+import { columns } from "./components/columns";
+import { DataTable } from "./components/data-table";
 import { Progress } from "@/components/ui/progress";
 import { MyResponsivePie } from "@/components/piechart";
-import Link from "next/link";
 
 function getAge(birthDate: Date | undefined) {
   if (birthDate) {
@@ -32,35 +31,6 @@ export type student = {
 
 type StudentsArray = student[];
 
-const data = [
-  {
-    id: "go",
-    value: 337,
-    color: "hsla(186, 94%, 28%, 1)",
-  },
-  {
-    id: "python",
-    value: 366,
-    color: "hsl(307, 73%, 22%)",
-  },
-  {
-    id: "lisp",
-    value: 336,
-    color: "hsl(324, 70%, 50%)",
-  },
-  {
-    id: "java",
-    value: 114,
-    color: "hsl(157, 70%, 50%)",
-  },
-  {
-    id: "css",
-
-    value: 288,
-    color: "hsl(247, 70%, 50%)",
-  },
-];
-
 type GroupColors = Record<string, string>;
 
 const groupColors: GroupColors = {
@@ -74,20 +44,20 @@ const groupColors: GroupColors = {
 };
 
 export default async function DemoPage() {
-  const students: StudentsArray = await api.post.getAllStudents.query();
+  // const students: StudentsArray = await api.post.getAllStudents.query();
   const numberOfStudents = await api.post.numberOfstudents.query();
   const GroupsCounts = await api.post.getGroupsCounts.query();
 
-  const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
+  // const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
 
   const AhzabSum = Math.round(
     GroupsCounts.reduce((sum, group) => sum + group.Ahzab!, 0) /
       (numberOfStudents.Females + numberOfStudents.Males),
   );
-  const ageSum = Math.round(
-    students.reduce((sum, std) => sum + getAge(std.dob), 0) /
-      (numberOfStudents.Females + numberOfStudents.Males),
-  );
+  // const ageSum = Math.round(
+  //   students.reduce((sum, std) => sum + getAge(std.dob), 0) /
+  //     (numberOfStudents.Females + numberOfStudents.Males),
+  // );
 
   const bestGroup = GroupsCounts.reduce((maxGroup, currentGroup) => {
     return currentGroup.Ahzab! > maxGroup.Ahzab! ? currentGroup : maxGroup;
@@ -127,7 +97,7 @@ export default async function DemoPage() {
         <div className="row-span-2 flex flex-col items-center justify-around  gap-3 rounded-3xl p-2 shadow-custom">
           <h2 className="text-2xl  text-darkgreen">مجموع الطلبة</h2>
           <p className="text-6xl font-semibold text-darkgreen ">
-            {AllStudents.length}
+            {/* {AllStudents.length} */}
           </p>
           <h2 className="text-2xl  text-darkgreen"> موزعين على 7 أفواج</h2>
         </div>
@@ -141,11 +111,11 @@ export default async function DemoPage() {
             <Progress
               gender="Male"
               className="bg-opacity-60"
-              value={(numberOfStudents.Males * 100) / AllStudents.length}
+              // value={(numberOfStudents.Males * 100) / AllStudents.length}
             />
 
             <p className=" w-52 pt-3 text-center text-blue-700">
-              {Math.round((numberOfStudents.Males * 100) / AllStudents.length)}%
+              {/* {Math.round((numberOfStudents.Males * 100) / AllStudents.length)}% */}
             </p>
           </div>
         </div>
@@ -158,20 +128,20 @@ export default async function DemoPage() {
             <div>
               <Progress
                 gender="Female"
-                value={(numberOfStudents.Females * 100) / AllStudents.length}
+                // value={(numberOfStudents.Females * 100) / AllStudents.length}
               />
             </div>
             <p className=" w-52 pt-3 text-center text-pink-600">
-              {Math.round(
+              {/* {Math.round(
                 (numberOfStudents.Females * 100) / AllStudents.length,
-              )}
+              )} */}
               %
             </p>
           </div>
         </div>
         <div className="col-span-2 row-span-4  rounded-3xl  shadow-custom ">
           <div className=" container   ">
-            <DataTable columns={columns} data={AllStudents} searchKey="name" />
+            {/* <DataTable columns={columns} data={AllStudents} searchKey="name" /> */}
           </div>
         </div>
 
@@ -180,10 +150,10 @@ export default async function DemoPage() {
             <MyResponsivePie data={formatedGroupsCounts} />
           </div>
 
-          <div className="flex basis-1/3 flex-col items-center justify-center gap-1">
-            <p>متوسط الحفظ : {AhzabSum}</p>
-            <p>متوسط الأعمار : {ageSum}</p>
-            <p> لفوج المتفوق : {bestGroup}</p>
+          <div className="flex basis-1/3 flex-col items-center justify-center gap-5">
+            <p className="text-lg">متوسط الحفظ : {AhzabSum}</p>
+            {/* <p className="text-lg">متوسط الأعمار : {ageSum}</p> */}
+            <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>
           </div>
         </div>
       </div>
