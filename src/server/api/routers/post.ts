@@ -55,20 +55,6 @@ export const postRouter = createTRPCRouter({
         });
       }
     }),
-  // numberOfstudents: publicProcedure.query(({ ctx }) => {
-  //   return ctx.db.student.count({
-  //     where: {
-  //       sex: "Female",
-  //     },
-  //   });
-  //   const Males = ctx.db.student.count({
-  //     where: {
-  //       sex: "Male",
-  //     },
-  //   });
-
-  //   return { Females, Males };
-  // }),
 
   getMales: publicProcedure.query(({ ctx }) => {
     return ctx.db.student.count({
@@ -93,23 +79,7 @@ export const postRouter = createTRPCRouter({
 
     return { Ahzab: totalAhzab._sum };
   }),
-  // getGroupsCounts: publicProcedure.query(async ({ ctx }) => {
-  //   const groupCounts = await ctx.db.student.groupBy({
-  //     by: ["group"],
-  //     _count: true,
-  //     _sum: {
-  //       Ahzab: true,
-  //     },
-  //   });
 
-  //   const formattedGroupCounts = groupCounts.map((groupCount) => ({
-  //     id: groupCount.group,
-  //     value: groupCount._count,
-  //     ...groupCount._sum,
-  //   }));
-
-  //   return formattedGroupCounts;
-  // }),
   getGroups: publicProcedure.query(({ ctx }) => {
     return ctx.db.student.groupBy({
       by: ["group"],
@@ -119,15 +89,7 @@ export const postRouter = createTRPCRouter({
       },
     });
   }),
-  // getAllStudents: publicProcedure.query(async ({ ctx }) => {
-  //   const students = await ctx.db.student.findMany({
-  //     orderBy: {
-  //       Ahzab: "desc",
-  //     },
-  //   });
 
-  //   return students;
-  // }),
   getAllStudents: publicProcedure.query(({ ctx }) => {
     return ctx.db.student.findMany({
       orderBy: {

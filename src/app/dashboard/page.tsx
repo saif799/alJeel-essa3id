@@ -6,6 +6,7 @@ import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 import { Progress } from "@/components/ui/progress";
 import { MyResponsivePie } from "@/components/piechart";
+import { db } from "@/server/db";
 
 function getAge(birthDate: Date | undefined) {
   if (birthDate) {
@@ -29,6 +30,15 @@ export type student = {
   dob: Date | undefined;
 };
 
+interface std {
+  id: string;
+  name: string;
+  famillyName: string;
+  Ahzab: number;
+  group: string;
+  dob: Date | undefined;
+}
+
 type StudentsArray = student[];
 
 type GroupColors = Record<string, string>;
@@ -44,26 +54,41 @@ const groupColors: GroupColors = {
 };
 
 export default async function DemoPage() {
-  const students: StudentsArray = await api.post.getAllStudents.query();
-  // const numberOfStudents = await api.post.numberOfstudents.query();
-  const femalesNbr = await api.post.getFemales.query();
-  const malesNbr = await api.post.getMales.query();
-  const GroupsCounts = await api.post.getGroups.query();
+  // const students: StudentsArray = await api.post.getAllStudents.query();
+  const students: StudentsArray = await db.student.findMany({
+    orderBy: {
+      Ahzab: "desc",
+    },
+  });
+
+  const femalesNbr = await db.student.count({
+    where: {
+      sex: "Female",
+    },
+  });
+  // const femalesNbr = await api.post.getFemales.query();
+  const malesNbr = await db.student.count({
+    where: {
+      sex: "Male",
+    },
+  });
+  // const malesNbr = await api.post.getMales.query();
+  const GroupsCounts = await db.student.groupBy({
+    by: ["group"],
+    _count: true,
+    _sum: {
+      Ahzab: true,
+    },
+  });
+  // const GroupsCounts = await api.post.getGroups.query();
 
   const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
 
-  // const AhzabSum = Math.round(
-  //   GroupsCounts.reduce((sum, group) => sum + group.Ahzab!, 0) /
-  //     (numberOfStudents.Females + numberOfStudents.Males),
-  // );
   const AhzabSum = Math.round(
     GroupsCounts.reduce((sum, group) => sum + group._sum.Ahzab!, 0) /
       (femalesNbr + malesNbr),
   );
-  // const ageSum = Math.round(
-  //   students.reduce((sum, std) => sum + getAge(std.dob), 0) /
-  //     (numberOfStudents.Females + numberOfStudents.Males),
-  // );
+
   const ageSum = Math.round(
     students.reduce((sum, std) => sum + getAge(std.dob), 0) /
       (malesNbr + femalesNbr),
@@ -118,11 +143,7 @@ export default async function DemoPage() {
         </div>
         <div className="row-span-2 flex flex-col items-center justify-around gap-3 rounded-3xl shadow-custom">
           <h2 className="text-2xl  text-darkgreen"> عدد الذكور</h2>
-          <p className="text-6xl font-semibold text-darkgreen ">
-            {" "}
-            {/* {numberOfStudents.Males} */}
-            {malesNbr}
-          </p>
+          <p className="text-6xl font-semibold text-darkgreen ">{malesNbr}</p>
           <div>
             <Progress
               gender="Male"
@@ -137,10 +158,7 @@ export default async function DemoPage() {
         </div>
         <div className="row-span-2 flex flex-col items-center justify-around gap-3 rounded-3xl shadow-custom">
           <h2 className="text-2xl  text-darkgreen"> عدد الإناث</h2>
-          <p className="text-6xl font-semibold text-darkgreen ">
-            {/* {numberOfStudents.Females} */}
-            {femalesNbr}
-          </p>
+          <p className="text-6xl font-semibold text-darkgreen ">{femalesNbr}</p>
           <div className="  ">
             <div>
               <Progress
