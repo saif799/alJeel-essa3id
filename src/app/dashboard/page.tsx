@@ -54,35 +54,67 @@ const groupColors: GroupColors = {
 };
 
 export default async function DemoPage() {
-  // const students: StudentsArray = await api.post.getAllStudents.query();
-  const students: StudentsArray = await db.student.findMany({
+  // const students: StudentsArray = await db.student.findMany({
+  //   orderBy: {
+  //     Ahzab: "desc",
+  //   },
+  // });
+
+  // const femalesNbr = await db.student.count({
+  //   where: {
+  //     sex: "Female",
+  //   },
+  // });
+  // const malesNbr = await db.student.count({
+  //   where: {
+  //     sex: "Male",
+  //   },
+  // });
+  // const GroupsCounts = await db.student.groupBy({
+  //   by: ["group"],
+  //   _count: true,
+  //   _sum: {
+  //     Ahzab: true,
+  //   },
+  // });
+
+  const studentsPromise = db.student.findMany({
     orderBy: {
       Ahzab: "desc",
     },
   });
 
-  const femalesNbr = await db.student.count({
+  const femalesNbrPromise = db.student.count({
     where: {
       sex: "Female",
     },
   });
-  // const femalesNbr = await api.post.getFemales.query();
-  const malesNbr = await db.student.count({
+
+  const malesNbrPromise = db.student.count({
     where: {
       sex: "Male",
     },
   });
-  // const malesNbr = await api.post.getMales.query();
-  const GroupsCounts = await db.student.groupBy({
+
+  const GroupsCountsPromise = db.student.groupBy({
     by: ["group"],
     _count: true,
     _sum: {
       Ahzab: true,
     },
   });
-  // const GroupsCounts = await api.post.getGroups.query();
 
-  const AllStudents = students.map((std) => ({ ...std, age: getAge(std.dob) }));
+  const [students, femalesNbr, malesNbr, GroupsCounts] = await Promise.all([
+    studentsPromise,
+    femalesNbrPromise,
+    malesNbrPromise,
+    GroupsCountsPromise,
+  ]);
+
+  const AllStudents = students.map((student) => ({
+    ...student,
+    age: getAge(student.dob),
+  }));
 
   const AhzabSum = Math.round(
     GroupsCounts.reduce((sum, group) => sum + group._sum.Ahzab!, 0) /
@@ -90,7 +122,7 @@ export default async function DemoPage() {
   );
 
   const ageSum = Math.round(
-    students.reduce((sum, std) => sum + getAge(std.dob), 0) /
+    AllStudents.reduce((sum, student) => sum + student.age, 0) /
       (malesNbr + femalesNbr),
   );
 
@@ -114,7 +146,7 @@ export default async function DemoPage() {
   return (
     <div className=" flex h-screen">
       <div className=" basis-1/6 bg-lightgreen">
-        <div className=" flex flex-col items-center gap-4 py-9">
+        <div className=" flex flex-col items-center gap-4 py-8">
           <Link href="/">
             <Image
               src="/assets/jil logo white.svg"
@@ -183,7 +215,7 @@ export default async function DemoPage() {
           </div>
 
           <div className="flex basis-1/3 flex-col items-center justify-center gap-5">
-            <p className="text-lg">متوسط الحفظ : {AhzabSum}</p>
+            <p className="text-lg">متوسط الحفظ : {AhzabSum} أحزاب</p>
             <p className="text-lg">متوسط الأعمار : {ageSum}</p>
             <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>
           </div>

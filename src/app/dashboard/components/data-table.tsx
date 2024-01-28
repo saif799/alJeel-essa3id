@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-3">
         <div className="flex w-full justify-center">
           <Input
             placeholder="بحث"
@@ -122,7 +122,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex   items-end justify-end space-x-2 py-1">
+      <div className="flex   items-end justify-end space-x-2 ">
         <Button
           variant="outline"
           size="sm"
