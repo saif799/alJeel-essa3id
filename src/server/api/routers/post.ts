@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { error } from "console";
 
 export const postRouter = createTRPCRouter({
   createStudent: publicProcedure
@@ -55,46 +56,4 @@ export const postRouter = createTRPCRouter({
         });
       }
     }),
-
-  getMales: publicProcedure.query(({ ctx }) => {
-    return ctx.db.student.count({
-      where: {
-        sex: "Male",
-      },
-    });
-  }),
-  getFemales: publicProcedure.query(({ ctx }) => {
-    return ctx.db.student.count({
-      where: {
-        sex: "Female",
-      },
-    });
-  }),
-  AhzabSum: publicProcedure.query(async ({ ctx }) => {
-    const totalAhzab = await ctx.db.student.aggregate({
-      _sum: {
-        Ahzab: true,
-      },
-    });
-
-    return { Ahzab: totalAhzab._sum };
-  }),
-
-  getGroups: publicProcedure.query(({ ctx }) => {
-    return ctx.db.student.groupBy({
-      by: ["group"],
-      _count: true,
-      _sum: {
-        Ahzab: true,
-      },
-    });
-  }),
-
-  getAllStudents: publicProcedure.query(({ ctx }) => {
-    return ctx.db.student.findMany({
-      orderBy: {
-        Ahzab: "desc",
-      },
-    });
-  }),
 });

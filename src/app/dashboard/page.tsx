@@ -30,17 +30,6 @@ export type student = {
   dob: Date | undefined;
 };
 
-interface std {
-  id: string;
-  name: string;
-  famillyName: string;
-  Ahzab: number;
-  group: string;
-  dob: Date | undefined;
-}
-
-type StudentsArray = student[];
-
 type GroupColors = Record<string, string>;
 
 const groupColors: GroupColors = {
@@ -54,30 +43,6 @@ const groupColors: GroupColors = {
 };
 
 export default async function DemoPage() {
-  // const students: StudentsArray = await db.student.findMany({
-  //   orderBy: {
-  //     Ahzab: "desc",
-  //   },
-  // });
-
-  // const femalesNbr = await db.student.count({
-  //   where: {
-  //     sex: "Female",
-  //   },
-  // });
-  // const malesNbr = await db.student.count({
-  //   where: {
-  //     sex: "Male",
-  //   },
-  // });
-  // const GroupsCounts = await db.student.groupBy({
-  //   by: ["group"],
-  //   _count: true,
-  //   _sum: {
-  //     Ahzab: true,
-  //   },
-  // });
-
   const studentsPromise = db.student.findMany({
     orderBy: {
       Ahzab: "desc",
@@ -112,7 +77,7 @@ export default async function DemoPage() {
   ]);
 
   const AllStudents = students.map((student) => ({
-    ...student,
+  ...student,
     age: getAge(student.dob),
   }));
 

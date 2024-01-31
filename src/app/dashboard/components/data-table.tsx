@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,6 +37,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+  const router = useRouter();
   const table = useReactTable({
     data,
     columns,
@@ -96,9 +98,16 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  onClick={() =>
+                    router.push(
+                      `dashboard/${(row.original as { id: string }).id}`,
+                    )
+                  }
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className=""
                 >
+                  {/* <Link className="w-full" href={``}> */}
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className=" text-darkgreen">
                       {flexRender(
@@ -107,6 +116,7 @@ export function DataTable<TData, TValue>({
                       )}
                     </TableCell>
                   ))}
+                  {/* </Link> */}
                 </TableRow>
               ))
             ) : (

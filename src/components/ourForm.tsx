@@ -87,7 +87,10 @@ export function ProfileForm() {
           }
         },
         onError: (er) => {
-          toast({ description: er.message });
+          toast({
+            title: "there was an error ",
+            description: "please repeat again",
+          });
         },
       },
     );
@@ -398,7 +401,7 @@ export function ProfileForm() {
               name="start_date"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1">
-                  <FormLabel>  موسم الالتحاق </FormLabel>
+                  <FormLabel> موسم الالتحاق </FormLabel>
                   <Select
                     dir="rtl"
                     onValueChange={field.onChange}
