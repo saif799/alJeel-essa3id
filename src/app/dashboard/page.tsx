@@ -117,6 +117,7 @@ export default async function DemoPage() {
               alt="jeel-logo"
               width={112}
               height={120}
+              loading="eager"
             />{" "}
           </Link>
           <h1 className=" text-2xl font-bold text-white  ">لوحة التحكم</h1>
