@@ -16,6 +16,7 @@ export function TRPCReactProvider(props: {
 }) {
   const [queryClient] = useState(() => new QueryClient());
 
+  
   const [trpcClient] = useState(() =>
     api.createClient({
       transformer,
