@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BarChart2 } from "lucide-react";
-import { api } from "@/trpc/server";
 import { columns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 import { Progress } from "@/components/ui/progress";
@@ -77,7 +76,7 @@ export default async function DemoPage() {
   ]);
 
   const AllStudents = students.map((student) => ({
-  ...student,
+    ...student,
     age: getAge(student.dob),
   }));
 
