@@ -21,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { api } from "@/trpc/react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { cn } from "@/lib/utils";
@@ -29,8 +28,8 @@ import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { addStudent } from "server/post";
+import { useMutation } from "@tanstack/react-query";
+import { addStudent } from "@/lib/server-functions/post";
 
 const formSchema = z.object({
   name: z.string({ required_error: "يرجى إدخال الإسم" }).min(3, {
@@ -67,9 +66,6 @@ const formSchema = z.object({
 });
 
 export function ProfileForm() {
-  // const { isLoading, mutate: createStudent } =
-  //   api.post.createStudent.useMutation({});
-
   const { isLoading, mutate: createStudent } = useMutation(addStudent);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -91,7 +87,7 @@ export function ProfileForm() {
         onError: () => {
           toast({
             title: "there was an error ",
-            description: "please repeat again",
+            description: "please tyr again",
           });
         },
       },
