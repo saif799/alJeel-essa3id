@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex  items-center justify-center  ">
       <div className=" mx-auto w-full  ">
         <header className="sticky my-4 flex items-center justify-between  px-2 lg:mb-16 lg:px-20">
-          <Image width="202" height="51" src="/images/header logo.webp" alt="" />
+          <Image width="202" height="51" src="/images/header-logo.webp" alt="" />
           <Button className="rounded-2xl">
             <Link href="/inscription"> التسجيل الإلكتروني</Link>
           </Button>
