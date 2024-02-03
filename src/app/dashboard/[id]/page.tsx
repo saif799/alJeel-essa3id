@@ -33,7 +33,7 @@ const Student = async ({ params }: { params: { id: string } }) => {
         <div className="flex flex-col items-center pb-28">
           <Image
             className="h-[145px] w-full object-cover"
-            src="/assets/profile_background-min.jpg"
+            src="/images/profile_background.webp"
             alt="profile backgorund"
             width={1108}
             height={0}
