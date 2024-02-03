@@ -14,7 +14,7 @@ const Student = async ({ params }: { params: { id: string } }) => {
         <div className=" flex flex-col items-center gap-4 py-8">
           <Link href="/">
             <Image
-              src="/assets/jil logo white.svg"
+              src="/images/jil_logo_white.webp"
               alt="jeel-logo"
               width={112}
               height={120}
