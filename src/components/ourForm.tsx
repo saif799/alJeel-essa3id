@@ -427,6 +427,7 @@ export function ProfileForm() {
               disabled={isLoading}
               type="submit"
               className=" w-32 rounded-2xl"
+              
             >
               {!isLoading ? (
                 "تسجيل"

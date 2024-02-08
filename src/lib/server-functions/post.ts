@@ -18,11 +18,10 @@ const studentSchema = z.object({
   dob: z.date(),
   start_date: z.string(),
 });
-
 type StudentParams = z.infer<typeof studentSchema>;
 
 export async function addStudent(input: StudentParams) {
-  const student = await db.student.create({
+  return await db.student.create({
     data: {
       name: input.name,
       famillyName: input.familyName,
@@ -39,6 +38,48 @@ export async function addStudent(input: StudentParams) {
       dob: input.dob,
     },
   });
+}
 
-  return student;
+export async function addHizb(idsToUpdate: string[]) {
+  try {
+    const updated = await db.student.updateMany({
+      where: {
+        id: {
+          in: idsToUpdate,
+        },
+        Ahzab: {
+          lte: 59,
+        },
+      },
+
+      data: {
+        Ahzab: {
+          increment: 1,
+        },
+      },
+    });
+  } catch (err) {
+    console.error("failed to update ", err);
+  }
+}
+export async function RemoveHizb(idsToUpdate: string[]) {
+  try {
+    const updated = await db.student.updateMany({
+      where: {
+        id: {
+          in: idsToUpdate,
+        },
+        Ahzab: {
+          gte: 1,
+        },
+      },
+      data: {
+        Ahzab: {
+          decrement: 1,
+        },
+      },
+    });
+  } catch (err) {
+    console.error("failed to update ", err);
+  }
 }

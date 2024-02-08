@@ -2,15 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import {
-  ColumnDef,
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   getFilteredRowModel,
-  ColumnFiltersState,
+  type ColumnFiltersState,
   useReactTable,
+  type SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -22,6 +23,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { RemoveHizb, addHizb } from "@/lib/server-functions/post";
+import { toast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
@@ -33,27 +38,84 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
+
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const router = useRouter();
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
+
     state: {
       columnFilters,
+      rowSelection,
+      sorting,
     },
     initialState: {
       pagination: {
-        pageSize: 8,
+        pageSize: 7,
       },
     },
   });
+
+  const { isLoading: addedHizbLoading, mutate: addAhzab } =
+    useMutation(addHizb);
+  const { isLoading: removedHizbLoading, mutate: removeHizb } =
+    useMutation(RemoveHizb);
+
+  const OnAddHizbClick = () => {
+    const selected = Object.keys(rowSelection);
+    const idsToUpdate = selected.map(
+      (index) => (data[+index] as { id: string }).id,
+    );
+    addAhzab(idsToUpdate, {
+      onSuccess: () => {
+        toast({
+          title: "hizb added successfully",
+        });
+        router.refresh();
+        setRowSelection({});
+      },
+      onError: () =>
+        toast({
+          title: "there was an error adding a hizb",
+        }),
+    });
+    return;
+  };
+
+  const OnRemoveHizb = () => {
+    const selected = Object.keys(rowSelection);
+    const idsToUpdate = selected.map(
+      (index) => (data[+index] as { id: string }).id,
+    );
+    removeHizb(idsToUpdate, {
+      onSuccess: () => {
+        toast({
+          title: "hizb deleted successfully",
+        });
+        router.refresh();
+        setRowSelection({});
+      },
+      onError: () =>
+        toast({
+          title: "there was an error deleting a hizb",
+        }),
+    });
+    return;
+  };
 
   return (
     <div>
@@ -75,7 +137,10 @@ export function DataTable<TData, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow
+                // className="border-b-1 border-gray-100"
+                key={headerGroup.id}
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
@@ -97,26 +162,21 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
+
+                
                 <TableRow
-                  onClick={() =>
-                    router.push(
-                      `dashboard/${(row.original as { id: string }).id}`,
-                    )
-                  }
-                  key={row.id}
+                  // className="border-b-1 border-gray-100"
+                  key={row.id  }
                   data-state={row.getIsSelected() && "selected"}
-                  className=""
                 >
-                  {/* <Link className="w-full" href={``}> */}
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className=" text-darkgreen">
+                    <TableCell key={cell.id} className=" pr-1 text-darkgreen">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )}
                     </TableCell>
                   ))}
-                  {/* </Link> */}
                 </TableRow>
               ))
             ) : (
@@ -132,23 +192,63 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex   items-end justify-end space-x-2 ">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          السابق
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          التالي
-        </Button>
+      <div className="flex items-center justify-between gap-3 space-x-2 pt-3 ">
+        {Object.keys(rowSelection).length ? (
+          <div className=" flex gap-3 ">
+            <Button
+              className="h-fit  py-1.5"
+              disabled={
+                Object.keys(rowSelection).length === 0 || addedHizbLoading
+              }
+              size="sm"
+              onClick={OnAddHizbClick}
+            >
+              {" "}
+              {addedHizbLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "إضافة حزب 1+"
+              )}
+            </Button>
+
+            <Button
+              disabled={
+                Object.keys(rowSelection).length === 0 || removedHizbLoading
+              }
+              variant="destructive"
+              className="h-fit  py-1.5 "
+              size="sm"
+              onClick={OnRemoveHizb}
+            >
+              {" "}
+              {removedHizbLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                "إنقاص حزب 1-"
+              )}
+            </Button>
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            السابق
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            التالي
+          </Button>
+        </div>
       </div>
     </div>
   );

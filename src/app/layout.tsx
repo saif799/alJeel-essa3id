@@ -11,7 +11,7 @@ const inter = Noto_Sans_Arabic({
 });
 
 export const metadata = {
-  title: "aljeel-assa3id",
+  title: "مؤسسة الجيل الصاعد للتأهيل التربوي",
   description:
     "مؤسسة الجيل الصاعد للتأهيل التربوي هي مؤسسة شبابية إصلاحية تهدف لإحتواء الجيل الصاعد و توفير بيئة إيمانية و فكرية سليمة تحفظهم من الإنحراف",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
