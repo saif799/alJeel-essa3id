@@ -1,5 +1,5 @@
 "use server";
-
+import { cookies } from "next/headers";
 import { db } from "@/server/db";
 import { z } from "zod";
 
@@ -21,6 +21,7 @@ const studentSchema = z.object({
 type StudentParams = z.infer<typeof studentSchema>;
 
 export async function addStudent(input: StudentParams) {
+  // disable cache for this server action
   return await db.student.create({
     data: {
       name: input.name,
@@ -41,6 +42,8 @@ export async function addStudent(input: StudentParams) {
 }
 
 export async function addHizb(idsToUpdate: string[]) {
+  const _cookies = cookies();
+
   try {
     const updated = await db.student.updateMany({
       where: {
@@ -63,6 +66,8 @@ export async function addHizb(idsToUpdate: string[]) {
   }
 }
 export async function RemoveHizb(idsToUpdate: string[]) {
+  const _cookies = cookies();
+
   try {
     const updated = await db.student.updateMany({
       where: {

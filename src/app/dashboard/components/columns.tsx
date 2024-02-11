@@ -12,6 +12,9 @@ import { type CheckedState } from "@radix-ui/react-checkbox";
 import InfoBlock from "@/components/infoBlock";
 import Image from "next/image";
 
+
+
+
 export type Student = {
   id: string;
   name: string;

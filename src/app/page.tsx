@@ -8,7 +8,12 @@ export default function Home() {
     <div className="flex  items-center justify-center  ">
       <div className=" mx-auto w-full  ">
         <header className="sticky my-4 flex items-center justify-between  px-2 lg:mb-16 lg:px-20">
-          <Image width="202" height="51" src="/images/header-logo.webp" alt="" />
+          <Image
+            width="202"
+            height="51"
+            src="/images/header-logo.webp"
+            alt=""
+          />
           <Button className="rounded-2xl">
             <Link href="/inscription"> التسجيل الإلكتروني</Link>
           </Button>
@@ -73,7 +78,12 @@ export default function Home() {
             <h2 className="py-3 text-center text-3xl font-bold lg:text-4xl">
               مجموعات المؤسسة
             </h2>
-            <Image src="/images/jil-logo.webp" alt="" width={230} height={230} />
+            <Image
+              src="/images/jil-logo.webp"
+              alt=""
+              width={230}
+              height={230}
+            />
             <div className=" flex gap-24">
               <a href="https://www.facebook.com/groups/244723067064797">
                 <Image
