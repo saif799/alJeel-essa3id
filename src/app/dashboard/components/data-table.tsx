@@ -90,7 +90,9 @@ export function DataTable<TData, TValue>({
       },
       onError: () =>
         toast({
-          title: "there was an error adding a hizb",
+          title: "Hizb didn't get added",
+          content: "Please try again",
+          variant: "destructive",
         }),
     });
     return;
@@ -111,7 +113,9 @@ export function DataTable<TData, TValue>({
       },
       onError: () =>
         toast({
-          title: "there was an error deleting a hizb",
+          title: "Hizb didn't get deleted",
+          content: "Please try again",
+          variant: "destructive",
         }),
     });
     return;
@@ -162,11 +166,9 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-
-                
                 <TableRow
                   // className="border-b-1 border-gray-100"
-                  key={row.id  }
+                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
