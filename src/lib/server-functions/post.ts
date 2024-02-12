@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { db } from "@/server/db";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const studentSchema = z.object({
   name: z.string().min(2),
@@ -41,6 +42,14 @@ export async function addStudent(input: StudentParams) {
   });
 }
 
+export async function getStudents() {
+  return await db.student.findMany({
+    orderBy: {
+      Ahzab: "desc",
+    },
+  });
+}
+
 export async function addHizb(idsToUpdate: string[]) {
   const _cookies = cookies();
 
@@ -61,6 +70,7 @@ export async function addHizb(idsToUpdate: string[]) {
         },
       },
     });
+    revalidatePath("/dashboard");
   } catch (err) {
     console.error("failed to update ", err);
   }
@@ -84,6 +94,7 @@ export async function RemoveHizb(idsToUpdate: string[]) {
         },
       },
     });
+    revalidatePath("/dashboard");
   } catch (err) {
     console.error("failed to update ", err);
   }

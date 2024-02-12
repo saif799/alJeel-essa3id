@@ -27,7 +27,6 @@ import { useMutation } from "@tanstack/react-query";
 import { RemoveHizb, addHizb } from "@/lib/server-functions/post";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,8 +43,6 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -85,9 +82,9 @@ export function DataTable<TData, TValue>({
         toast({
           title: "hizb added successfully",
         });
-        router.refresh();
         setRowSelection({});
       },
+
       onError: () =>
         toast({
           title: "Hizb didn't get added",
@@ -108,7 +105,6 @@ export function DataTable<TData, TValue>({
         toast({
           title: "hizb deleted successfully",
         });
-        router.refresh();
         setRowSelection({});
       },
       onError: () =>
@@ -118,7 +114,6 @@ export function DataTable<TData, TValue>({
           variant: "destructive",
         }),
     });
-    return;
   };
 
   return (

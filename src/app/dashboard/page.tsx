@@ -3,6 +3,7 @@ import { DataTable } from "./components/data-table";
 import { Progress } from "@/components/ui/progress";
 import { MyResponsivePie } from "@/components/piechart";
 import { db } from "@/server/db";
+// import { TableWrapper } from "@/components/TableWrapper";
 
 function getAge(birthDate: Date | undefined) {
   if (birthDate) {
@@ -144,7 +145,7 @@ export default async function DemoPage() {
         </div>
       </div>
       <div className="col-span-2 row-span-4  rounded-3xl  shadow-custom ">
-        <div className=" container   ">
+        <div className=" container">
           <DataTable columns={columns} data={AllStudents} searchKey="name" />
         </div>
       </div>
