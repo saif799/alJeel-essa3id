@@ -80,15 +80,14 @@ export function DataTable<TData, TValue>({
     addAhzab(idsToUpdate, {
       onSuccess: () => {
         toast({
-          title: "hizb added successfully",
+          title: "تمّ التعديل بنجاح - إضافة حزب",
         });
         setRowSelection({});
       },
 
       onError: () =>
         toast({
-          title: "Hizb didn't get added",
-          content: "Please try again",
+          title: "فشل التعديل - حاول مرة أخرى",
           variant: "destructive",
         }),
     });
@@ -103,14 +102,13 @@ export function DataTable<TData, TValue>({
     removeHizb(idsToUpdate, {
       onSuccess: () => {
         toast({
-          title: "hizb deleted successfully",
+          title: "تمّ التعديل بنجاح - خفض حزب",
         });
         setRowSelection({});
       },
       onError: () =>
         toast({
-          title: "Hizb didn't get deleted",
-          content: "Please try again",
+          title: "فشل التعديل - حاول مرة أخرى",
           variant: "destructive",
         }),
     });
@@ -195,7 +193,9 @@ export function DataTable<TData, TValue>({
             <Button
               className="h-fit  py-1.5"
               disabled={
-                Object.keys(rowSelection).length === 0 || addedHizbLoading
+                Object.keys(rowSelection).length === 0 ||
+                addedHizbLoading ||
+                removedHizbLoading
               }
               size="sm"
               onClick={OnAddHizbClick}
@@ -210,7 +210,9 @@ export function DataTable<TData, TValue>({
 
             <Button
               disabled={
-                Object.keys(rowSelection).length === 0 || removedHizbLoading
+                Object.keys(rowSelection).length === 0 ||
+                removedHizbLoading ||
+                addedHizbLoading
               }
               variant="destructive"
               className="h-fit  py-1.5 "
