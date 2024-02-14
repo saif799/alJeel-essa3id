@@ -168,7 +168,7 @@ export function ProfileForm() {
               name="facbookAcount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>حساب فيسبوك* </FormLabel>
+                  <FormLabel>*حساب فيسبوك </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -399,7 +399,7 @@ export function ProfileForm() {
               name="start_date"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1">
-                  <FormLabel> موسم الالتحاق </FormLabel>
+                  <FormLabel className="truncate "> موسم الالتحاق </FormLabel>
                   <Select
                     dir="rtl"
                     onValueChange={field.onChange}
@@ -427,7 +427,6 @@ export function ProfileForm() {
               disabled={isLoading}
               type="submit"
               className=" w-32 rounded-2xl"
-              
             >
               {!isLoading ? (
                 "تسجيل"

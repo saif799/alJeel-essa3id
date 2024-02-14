@@ -9,7 +9,12 @@ const Page = () => {
       <header className="sticky my-4 flex items-center justify-center  ">
         <Link href="/">
           {" "}
-          <Image width="202" height="51" src="/images/header logo.svg" alt="" />
+          <Image
+            width="202"
+            height="51"
+            src="/images/header-logo.webp"
+            alt="jill-header-logo"
+          />
         </Link>
       </header>
 
