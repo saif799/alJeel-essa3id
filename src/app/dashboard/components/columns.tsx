@@ -12,9 +12,6 @@ import { type CheckedState } from "@radix-ui/react-checkbox";
 import InfoBlock from "@/components/infoBlock";
 import Image from "next/image";
 
-
-
-
 export type Student = {
   id: string;
   name: string;
@@ -62,10 +59,10 @@ export const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => {
       return (
         <Dialog>
-          <DialogTrigger className="text-darkgreen">
+          <DialogTrigger className=" min-w-[100px] text-start text-darkgreen">
             {row.original.name}
           </DialogTrigger>
-          <DialogContent className=" p-0">
+          <DialogContent className="p-0">
             <StudentInfo original={row.original} />
           </DialogContent>
         </Dialog>
@@ -105,10 +102,10 @@ export const columns: ColumnDef<Student>[] = [
 
 const StudentInfo = (row: { original: Student }) => {
   return (
-    <div className="w-[1108]  pb-4">
-      <div className="flex flex-col items-center pb-20">
+    <div className=" w-[1108]   pb-4">
+      <div className="flex flex-col items-center pb-20 ">
         <Image
-          className="h-[145px] w-full rounded-t-3xl object-cover"
+          className=" h-[145px] w-full rounded-t-3xl  object-cover"
           src="/images/profile_background.webp"
           alt="profile backgorund"
           width={1108}
@@ -128,7 +125,7 @@ const StudentInfo = (row: { original: Student }) => {
           <hr className=" flex-1  rounded   border-1 border-lightgreen  opacity-40  " />
         </div>
 
-        <div className="flex w-full justify-around">
+        <div className="flex w-full  justify-around ">
           <div className=" flex flex-1 pr-12">
             <InfoBlock name="الإسم" content={row.original.name} />
           </div>

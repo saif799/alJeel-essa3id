@@ -26,7 +26,13 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { RemoveHizb, addHizb } from "@/lib/server-functions/post";
 import { toast } from "@/components/ui/use-toast";
-import { Loader2 } from "lucide-react";
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -54,7 +60,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
-
+    pageCount: Math.ceil(data.length / 7),
     state: {
       columnFilters,
       rowSelection,
@@ -115,7 +121,7 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div>
+    <div className="flex min-h-full flex-col justify-between pb-3 pt-2">
       <div className="flex items-center py-3">
         <div className="flex w-full justify-center">
           <Input
@@ -130,8 +136,8 @@ export function DataTable<TData, TValue>({
           />
         </div>
       </div>
-      <div className="border h-full rounded-md">
-        <Table>
+      <div className="grow">
+        <Table className="min-h-[300px]">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
@@ -142,7 +148,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-right text-black"
+                      className="text-start text-black"
                     >
                       {header.isPlaceholder
                         ? null
@@ -165,7 +171,10 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className=" pr-1 text-darkgreen">
+                    <TableCell
+                      key={cell.id}
+                      className=" truncate pr-1 text-start text-darkgreen"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -187,7 +196,8 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between gap-3 space-x-2 pt-3 ">
+
+      <div className="flex flex-col-reverse items-center justify-between gap-3 px-2 lg:flex-row">
         {Object.keys(rowSelection).length ? (
           <div className=" flex gap-3 ">
             <Button
@@ -230,22 +240,53 @@ export function DataTable<TData, TValue>({
         ) : (
           <div></div>
         )}
-        <div>
+        <div className="flex items-center gap-1">
           <Button
+            className="border-input-secondary p-2 text-gray-600"
+            variant="outline"
+            size="sm"
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronLast className="h-4 w-4 " />
+          </Button>
+
+          <Button
+            className="border-input-secondary p-2 text-gray-600 "
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            السابق
+            <ChevronRight className="h-4 w-4 " />
           </Button>
+          <p className="font-normal text-darkgreen ">
+            {" "}
+            {/* {` ${
+              table.getState().pagination.pageIndex + 1
+            } / ${table.getPageCount()}`} */}
+            {` ${
+              table.getState().pagination.pageIndex + 1
+            } من ${table.getPageCount()}`}
+          </p>
           <Button
+            className="border-input-secondary p-2 text-gray-600"
             variant="outline"
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            التالي
+            <ChevronLeft className="h-4 w-4 " />
+          </Button>
+
+          <Button
+            className="border-input-secondary p-2 text-gray-600"
+            variant="outline"
+            size="sm"
+            onClick={() => table.setPageIndex(table.getPageCount())}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronFirst className="h-4 w-4 " />
           </Button>
         </div>
       </div>

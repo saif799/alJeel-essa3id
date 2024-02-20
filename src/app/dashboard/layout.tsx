@@ -5,7 +5,7 @@ export const metadata = {
 };
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen flex-col lg:flex-row">
       <SideBar />
 
       {children}

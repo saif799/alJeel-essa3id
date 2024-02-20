@@ -3,6 +3,7 @@ import { DataTable } from "./components/data-table";
 import { Progress } from "@/components/ui/progress";
 import { MyResponsivePie } from "@/components/piechart";
 import { db } from "@/server/db";
+import ResponsiveWrapper from "@/components/responsiveWrapper";
 // import { TableWrapper } from "@/components/TableWrapper";
 
 function getAge(birthDate: Date | undefined) {
@@ -106,15 +107,15 @@ export default async function DemoPage() {
   });
 
   return (
-    <div className="grid basis-5/6 grid-cols-3 grid-rows-6 gap-x-10 gap-y-7 px-9 py-5">
-      <div className="row-span-2 flex flex-col items-center justify-around  gap-3 rounded-3xl p-2 shadow-custom">
+    <div className=" lg:grid lg:basis-5/6 lg:grid-cols-3 lg:grid-rows-6 lg:gap-x-10 lg:gap-y-7 lg:divide-none lg:px-9 lg:py-5">
+      <ResponsiveWrapper className="flex flex-col items-center justify-around gap-3  p-2  lg:row-span-2 ">
         <h2 className="text-2xl  text-darkgreen">مجموع الطلبة</h2>
         <p className="text-6xl font-semibold text-darkgreen ">
           {AllStudents.length}
         </p>
         <h2 className="text-2xl  text-darkgreen"> موزعين على 7 أفواج</h2>
-      </div>
-      <div className="row-span-2 flex flex-col items-center justify-around gap-3 rounded-3xl shadow-custom">
+      </ResponsiveWrapper>
+      <ResponsiveWrapper className="flex flex-col items-center justify-around gap-3 lg:row-span-2">
         <h2 className="text-2xl  text-darkgreen"> عدد الذكور</h2>
         <p className="text-6xl font-semibold text-darkgreen ">{malesNbr}</p>
         <div>
@@ -128,8 +129,9 @@ export default async function DemoPage() {
             {Math.round((malesNbr * 100) / AllStudents.length)}%
           </p>
         </div>
-      </div>
-      <div className="row-span-2 flex flex-col items-center justify-around gap-3 rounded-3xl shadow-custom">
+      </ResponsiveWrapper>
+
+      <ResponsiveWrapper className="flex flex-col items-center justify-around gap-3 lg:row-span-2">
         <h2 className="text-2xl  text-darkgreen"> عدد الإناث</h2>
         <p className="text-6xl font-semibold text-darkgreen ">{femalesNbr}</p>
         <div className="  ">
@@ -143,14 +145,13 @@ export default async function DemoPage() {
             {Math.round((femalesNbr * 100) / AllStudents.length)}%
           </p>
         </div>
-      </div>
-      <div className="col-span-2 row-span-4  rounded-3xl  shadow-custom ">
-        <div className=" container">
-          <DataTable columns={columns} data={AllStudents} searchKey="name" />
-        </div>
-      </div>
+      </ResponsiveWrapper>
 
-      <div className="col-span-1 row-span-4 flex flex-col justify-around rounded-3xl p-4 shadow-custom">
+      <ResponsiveWrapper className="container lg:col-span-2 lg:row-span-4">
+        <DataTable columns={columns} data={AllStudents} searchKey="name" />
+      </ResponsiveWrapper>
+
+      <ResponsiveWrapper className="lg:border m-2 flex flex-col justify-around  rounded-lg border-1 p-4 lg:col-span-1 lg:row-span-4 lg:m-0">
         <div className="relative basis-2/3">
           <MyResponsivePie data={formatedGroupsCountsForObject} />
         </div>
@@ -160,7 +161,7 @@ export default async function DemoPage() {
           <p className="text-lg">متوسط الأعمار : {ageSum}</p>
           <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>
         </div>
-      </div>
+      </ResponsiveWrapper>
     </div>
   );
 }
