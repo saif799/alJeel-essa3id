@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
-    pageCount: Math.ceil(data.length / 7),
+    // pageCount: Math.ceil(data.length / 7),
     state: {
       columnFilters,
       rowSelection,
@@ -136,8 +136,8 @@ export function DataTable<TData, TValue>({
           />
         </div>
       </div>
-      <div className="grow">
-        <Table className="min-h-[300px]">
+      <div className="min-h-[300px] grow ">
+        <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow

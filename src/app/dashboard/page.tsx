@@ -147,7 +147,7 @@ export default async function DemoPage() {
         </div>
       </ResponsiveWrapper>
 
-      <ResponsiveWrapper className="container  lg:col-span-2 lg:row-span-4">
+      <ResponsiveWrapper className="container  border-1 lg:col-span-2 lg:row-span-4">
         <DataTable columns={columns} data={AllStudents} searchKey="name" />
       </ResponsiveWrapper>
 
@@ -156,7 +156,7 @@ export default async function DemoPage() {
           <MyResponsivePie data={formatedGroupsCountsForObject} />
         </div>
 
-        <div className="flex basis-1/3 flex-col items-center justify-start gap-5">
+        <div className="flex basis-1/3 flex-col items-center justify-center gap-5">
           <p className="text-lg">متوسط الحفظ : {AhzabSum} أحزاب</p>
           <p className="text-lg">متوسط الأعمار : {ageSum}</p>
           <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>
