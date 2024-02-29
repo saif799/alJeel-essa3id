@@ -261,10 +261,6 @@ export function DataTable<TData, TValue>({
             <ChevronRight className="h-4 w-4 " />
           </Button>
           <p className="font-normal text-darkgreen ">
-            {" "}
-            {/* {` ${
-              table.getState().pagination.pageIndex + 1
-            } / ${table.getPageCount()}`} */}
             {` ${
               table.getState().pagination.pageIndex + 1
             } من ${table.getPageCount()}`}
@@ -283,7 +279,7 @@ export function DataTable<TData, TValue>({
             className="border-input-secondary p-2 text-gray-600"
             variant="outline"
             size="sm"
-            onClick={() => table.setPageIndex(table.getPageCount())}
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
             <ChevronFirst className="h-4 w-4 " />

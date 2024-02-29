@@ -16,7 +16,6 @@ type dataType = {
 
 const MyResponsivePie = ({ data }: { data: dataType[] }) => (
   <ResponsivePie
-  
     fit={false}
     data={data}
     colors={{ datum: "data.color" }}

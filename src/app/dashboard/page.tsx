@@ -108,7 +108,7 @@ export default async function DemoPage() {
 
   return (
     <div className=" lg:grid lg:basis-5/6 lg:grid-cols-3 lg:grid-rows-6 lg:gap-x-10 lg:gap-y-7 lg:divide-none lg:px-9 lg:py-5">
-      <ResponsiveWrapper className="flex flex-col items-center justify-around gap-3  p-2  lg:row-span-2 ">
+      <ResponsiveWrapper className="flex flex-col items-center justify-around gap-3  pb-5 lg:row-span-2 ">
         <h2 className="text-2xl  text-darkgreen">مجموع الطلبة</h2>
         <p className="text-6xl font-semibold text-darkgreen ">
           {AllStudents.length}
@@ -151,12 +151,12 @@ export default async function DemoPage() {
         <DataTable columns={columns} data={AllStudents} searchKey="name" />
       </ResponsiveWrapper>
 
-      <ResponsiveWrapper className="lg:border m-2 flex flex-col justify-around  rounded-lg border-1 p-4 lg:col-span-1 lg:row-span-4 lg:m-0">
-        <div className="relative basis-2/3">
+      <ResponsiveWrapper className="lg:border m-2  rounded-lg border-1 p-4 lg:col-span-1 lg:row-span-4 lg:m-0">
+        <div className="h-72">
           <MyResponsivePie data={formatedGroupsCountsForObject} />
         </div>
 
-        <div className="flex basis-1/3 flex-col items-center justify-center gap-5">
+        <div className="flex flex-col items-center justify-center gap-5">
           <p className="text-lg">متوسط الحفظ : {AhzabSum} أحزاب</p>
           <p className="text-lg">متوسط الأعمار : {ageSum}</p>
           <p className="text-lg"> الفوج المتفوق : {bestGroup}</p>

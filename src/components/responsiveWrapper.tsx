@@ -11,7 +11,10 @@ const ResponsiveWrapper = ({
 }) => {
   return (
     <div
-      className={cn("py-3 lg:rounded-3xl lg:py-0 lg:shadow-custom", className)}
+      className={cn(
+        "py-3.5 lg:rounded-3xl lg:py-0 lg:shadow-custom",
+        className,
+      )}
     >
       {children}
     </div>
